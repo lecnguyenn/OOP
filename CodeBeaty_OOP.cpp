@@ -10,9 +10,10 @@ class AbstractEmloyee{
 class Employee:AbstractEmloyee
 {
 private:
-    string Name;
     string Company;
     int Age;
+protected:
+    string Name;
 public:
     void setName(string name){ //setter
         Name = name;
@@ -50,18 +51,61 @@ public:
             std::cout<< Name <<", Sorry No promoted for you" << std::endl;
         
     }
+
+    virtual void Work(){
+        std::cout<< Name << " is  buying, Performing task..." << std::endl;
+    }
+};
+
+
+class Developer:public Employee {
+    public:
+    string FavProgramminglanguage;
+    Developer(string name, string company,int age, string favprogramming)
+        :Employee(name, company, age)
+        {
+            FavProgramminglanguage = favprogramming;
+        }
+        void FixBug(){
+            std::cout<< Name <<" Fixed bug using"<< FavProgramminglanguage << std::endl;
+        }
+        void Work(){
+            std::cout<<Name << " is Coding"<< FavProgramminglanguage <<std::endl;
+        }
+};
+
+
+class Teacher:public Employee{
+    public:
+    string Subject;
+    void PrepareLesson(){
+        std::cout << Name << " is preparing "<< Subject << std::endl;
+    }
+    Teacher(string name, string company, int age, string subject)
+    :Employee(name, company, age)
+    {
+        Subject = subject;
+    }
+    void Work(){
+        std::cout<<Name<<" is Teaching "<< Subject<< std::endl;
+    }
 };
 
 
 int main(){
-    Employee employee1 = Employee("Nguyen", "PTIT", 22);
-    Employee employee2 = Employee("Ngan", "APD", 33);
+    // Employee employee1 = Employee("Nguyen", "PTIT", 22);
+    // Employee employee2 = Employee("Ngan", "APD", 33);
 
-    employee1.AskForPromotion();
-    employee2.AskForPromotion();
+   Developer d = Developer("Nguyen", "PTIT", 22, "C++");
+   // d.FixBug();
+    Teacher t = Teacher("Ngan", "PTIT", 40, "Math");
 
-    
-    
+    Employee* e1 = &d;
+    Employee* e2 = &t;
+
+
+    e1->Work();
+    e2->Work();
 
 }
 
